@@ -1,0 +1,91 @@
+
+
+
+
+    <!-- ======= Hero Section signup form======= -->
+    <section id="hero" class="d-flex align-items-center">
+
+        <div class="container-fluid" data-aos="fade-up">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+  
+                <!--register Form -->
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="exampleInputText1" class="form-label">Name</label>
+                  <!-- <input type="text" name="name" class="form-control" id="exampleInputText1"> -->
+                  {{ form.name }}
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputText2" class="form-label">Username</label>
+                  <!-- <input type="text" name="username" class="form-control" id="exampleInputText2"> -->
+                  {{ form.username }}
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <!-- <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                  {{ form.email }}
+                  <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <!-- <input type="password" name="pass1" class="form-control" id="exampleInputPassword1"> -->
+                  {{ form.password1 }}
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
+                  <!-- <input type="password" name="pass2" class="form-control" id="exampleInputPassword2"> -->
+                  {{ form.password2 }}
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button type="submit" class="btn btn-primary"=>Submit</button>
+                </div>
+              </form>
+              <!--register form end -->
+  
+            </div>
+          </div>
+        </div>
+  
+      </section><!-- End hero -->
+
+
+      <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+
+      <div class="container-fluid" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+
+          <!--login Form -->
+          <form action="" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail3" class="form-label">Email address</label>
+              <!-- <input type="email" name="email_address" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp"> -->
+              {{ form.email }}
+              <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword4" class="form-label">Password</label>
+              <!-- <input type="password" name="password" class="form-control" id="exampleInputPassword4"> -->
+              {{ form.password }}
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <p>Don't have an account, <a href="{% url 'register' %}">Sign Up</a></p>
+              <button type="submit", name="login" class="btn btn-primary">Login</button>
+            </div>
+          </form>
+          <!--login form end -->
+
+          </div>
+      
+        </div>
+      </div>
+
+    </section><!-- End Hero -->
