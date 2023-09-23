@@ -187,8 +187,8 @@ h6 {
   align-items: center;
   justify-content: space-between;
   padding: 0 3px;
-  font-family: "Poppins", sans-serif;
-  font-size: 15px;
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 18px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
@@ -348,7 +348,7 @@ h6 {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(28, 47, 65, 0.9);
+  background: rgba(28, 65, 41, 0.9);
   transition: 0.3s;
   z-index: 999;
 }
@@ -392,7 +392,7 @@ h6 {
 .navbar-mobile a:hover,
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
-  color: #5846f9;
+  color: #3cd637;
 }
 
 .navbar-mobile .getstarted,
@@ -427,7 +427,7 @@ h6 {
 .navbar-mobile .dropdown ul a:hover,
 .navbar-mobile .dropdown ul .active:hover,
 .navbar-mobile .dropdown ul li:hover>a {
-  color: #5846f9;
+  color: #3cd637;
 }
 
 .navbar-mobile .dropdown>.dropdown-active {
