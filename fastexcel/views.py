@@ -1,8 +1,21 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
-from .forms import FileUploadForm
+from django.contrib.auth.views import LoginView
+from registration.backends.simple.views import RegistrationView
+
 import pandas as pd
 from multiprocessing import Pool
+
+from .forms import FileUploadForm, SignUpForm
+
+
+class MyRegistrationView(RegistrationView):
+    # logging.debug("Class initialised")
+    template_name = 'registration.html'
+    success_url = '/dashboard/'
+
+class MyLoginView(LoginView):
+    template_name = 'login.html'
 
 # Create your views here.
 def excel_to_qbxml(excel_file):
