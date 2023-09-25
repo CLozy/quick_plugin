@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .forms import  SignUpForm
+from .forms import  SignUpForm, LoginForm
 
 
 urlpatterns = [

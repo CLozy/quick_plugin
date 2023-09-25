@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import get_user_model
 from registration.backends.simple.views import RegistrationView
 from multiprocessing import Pool
-from .forms import FileUploadForm, SignUpForm
+
+from .forms import FileUploadForm, SignUpForm, LoginForm
 
 
 import pandas as pd
@@ -20,6 +22,9 @@ class MyRegistrationView(RegistrationView):
 
 class MyLoginView(LoginView):
     template_name = 'login.html'
+    authentication_form = LoginForm
+
+  
 
 
 
