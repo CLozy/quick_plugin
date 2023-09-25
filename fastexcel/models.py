@@ -24,6 +24,7 @@ class CustomUserManager(BaseUserManager):
 #custom model
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    companyname = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -31,7 +32,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-   
+    REQUIRED_FIELDS = ['companyname']
+ 
 
     def __str__(self):
         return self.email

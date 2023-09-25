@@ -21,7 +21,17 @@ class LoginForm(AuthenticationForm):
 
 class SignUpForm(RegistrationForm):
   
-    username = forms.CharField( label ='Company name', max_length=25, required=True )
+    companyname = forms.CharField( label ='Company name', max_length=25, required=True)
     email = forms.EmailField(label ='Your email', max_length=25, required=True)
     password1 = forms.CharField(label ='password', max_length=25, required=True)
     password2 = forms.CharField(label ='Repeat your password', max_length=25, required=True)
+
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.companyname = self.cleaned_data['companyname']
+
+        if commit:
+            user.save()
+
+        return user
