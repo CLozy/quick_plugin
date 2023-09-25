@@ -7,12 +7,11 @@ from multiprocessing import Pool
 
 from .forms import FileUploadForm, SignUpForm, LoginForm
 
-
-import pandas as pd
-
+from .datahandler import excel_to_csv
 
 
 
+# Create your views here.
 
 class MyRegistrationView(RegistrationView):
     # logging.debug("Class initialised")
@@ -24,8 +23,6 @@ class MyLoginView(LoginView):
     template_name = 'login.html'
     authentication_form = LoginForm
 
-  
-
 
 
 def landing_page(request):
@@ -34,16 +31,8 @@ def landing_page(request):
 def dashboard(request): 
     return render(request, 'charts.html')
 
-# Create your views here.
-def excel_to_qbxml(excel_file):
 
-    # Process the Excel file here, e.g., read and convert Excel to CSV
-    excel_df = pd.read_excel(excel_file)  # Read the Excel file into a DataFrame
-    excel_df.to_csv(f"quickplugin/fastexcel/data/{excel_file.name[:-4]}.csv", index=False)  # Convert and save as CSV
 
-    #convert csv to qbxml
-    
- 
 
 def upload_file(request):
     if request.method == 'POST':
@@ -52,14 +41,14 @@ def upload_file(request):
             # Handle the uploaded file here, e.g., save it to the server
             uploaded_file = form.cleaned_data['file']
             # Perform actions with the uploaded file
-            excel_to_qbxml(uploaded_file)
+            excel_to_csv(uploaded_file)
+            
 
 
     else:
         form = FileUploadForm()  # Create an instance of the form class
 
     return render(request, 'uploadfile.html', {'form': form})
-
 
 
 
