@@ -3,8 +3,9 @@ from registration.forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 
 
+
 class FileUploadForm(forms.Form):
-    myfile = forms.FileField(label='Select a file')
+    file = forms.FileField(required=True)
 
 
 class LoginForm(AuthenticationForm):

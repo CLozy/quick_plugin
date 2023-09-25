@@ -32,6 +32,19 @@ h6 {
   font-family: "Poppins", sans-serif;
 }
 
+/*  test*/
+.custom-button {
+  background-color: forestgreen;
+  border-color: forestgreen;
+  padding: 10px 13px;
+  font-size: 17px;
+}
+
+.custom-button:hover {
+  background-color: #228B22; /* Change to a different color on hover */
+  /* You can adjust other styles here, such as text color or box shadow */
+}
+
 /*--------------------------------------------------------------
 # form control
 --------------------------------------------------------------*/

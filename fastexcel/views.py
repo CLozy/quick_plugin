@@ -32,7 +32,7 @@ def landing_page(request):
     return render(request, 'index.html')
 
 def dashboard(request): 
-    return render(request, 'index2.html')
+    return render(request, 'charts.html')
 
 # Create your views here.
 def excel_to_qbxml(excel_file):
@@ -50,7 +50,7 @@ def upload_file(request):
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
             # Handle the uploaded file here, e.g., save it to the server
-            uploaded_file = form.cleaned_data['myfile']
+            uploaded_file = form.cleaned_data['file']
             # Perform actions with the uploaded file
             excel_to_qbxml(uploaded_file)
 
@@ -58,7 +58,7 @@ def upload_file(request):
     else:
         form = FileUploadForm()  # Create an instance of the form class
 
-    return render(request, 'index1.html', {'form': form})
+    return render(request, 'uploadfile.html', {'form': form})
 
 
 
