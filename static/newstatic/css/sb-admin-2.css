@@ -428,7 +428,7 @@ hr {
 
 small,
 .small {
-  font-size: 80%;
+  font-size: 100%;
   font-weight: 400;
 }
 
@@ -2317,7 +2317,7 @@ textarea.form-control {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: linear-gradient(45deg, #5846f9 0%, #7b27d8 100%);
+  background: linear-gradient(45deg, #0ebb2b98 0%, #04921093 100%);
   border: 1px solid transparent;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -2357,7 +2357,7 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background: linear-gradient(45deg, #5846f9 0%, #7b27d8 100%);
+  background: linear-gradient(45deg, #0ebb2b98 0%, #04921093 100%);
   /* border-color: #4e73df; */
 }
 
@@ -3462,6 +3462,17 @@ input[type="button"].btn-block {
 
 .input-group-append {
   margin-left: -1px;
+  transition: background-color 0.3s;
+    
+}
+
+.input-group-append:hover {
+  background-color: #04921093; /* Replace #your-color with the desired color, e.g., seagreen */
+}
+
+.input-group-prepend,
+.input-group-append:hover {
+  background-color: #04921093; /* Replace #your-color with the desired color, e.g., seagreen */
 }
 
 .input-group-text {
@@ -9592,7 +9603,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #4e73df !important;
+  color: #0ebb2b98 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
@@ -9901,8 +9912,8 @@ a:focus {
 
 .bg-gradient-primary {
   background-color: #4e73df;
-  background: linear-gradient(45deg, rgba(86, 58, 250, 0.9) 0%, rgba(116, 15, 214, 0.9) 100%);
-  background-image: linear-gradient(45deg, rgba(86, 58, 250, 0.9) 0%, rgba(116, 15, 214, 0.9) 100%);
+  background: linear-gradient(45deg, #04921093 0%, #04921093 100% );
+  background-image: linear-gradient(45deg, #04921093 0%, #04921093 100% );
   background-size: cover;
 }
 
@@ -10042,7 +10053,7 @@ a:focus {
 }
 
 .border-left-primary {
-  border-left: 0.25rem solid #4e73df !important;
+  border-left: 0.25rem solid #0ebb2b98 !important;
 }
 
 .border-bottom-primary {
@@ -10544,7 +10555,7 @@ a:focus {
     margin-right: 0.25rem;
   }
   .sidebar .nav-item .nav-link span {
-    font-size: 0.85rem;
+    font-size: 16px;
     display: inline;
   }
   .sidebar .nav-item .nav-link[data-toggle="collapse"]::after {

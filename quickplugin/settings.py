@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+from dotenv import   load_dotenv
 
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,13 +74,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'quickplugin.wsgi.application'
 
 
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+load_dotenv()
+db_name = os.getenv('NAME')
+password = os.getenv('PASSWORD')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        
+        'NAME': db_name,
+
+        'USER': 'postgres',
+
+        'PASSWORD': password,
+
+        'HOST': 'localhost',
+
+        'PORT': 5432,
     }
 }
 
@@ -100,6 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    
 ]
 
 
@@ -128,3 +149,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+ACCOUNT_ACTIVATION_DAYS = 7 #One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+REGISTRATION_OPEN = True
+
+LOGIN_REDIRECT_URL = '/dashboard/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/'

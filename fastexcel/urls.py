@@ -8,5 +8,6 @@ urlpatterns = [
     path('accounts/register/', views.MyRegistrationView.as_view(form_class = SignUpForm), name='registration_register'),
     path('accounts/login/', views.MyLoginView.as_view() , name='auth_login'),
     path('accounts/', include('registration.backends.default.urls')),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('upload/', views.upload_file),
 ]

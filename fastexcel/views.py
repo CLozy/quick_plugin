@@ -2,11 +2,14 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.views import LoginView
 from registration.backends.simple.views import RegistrationView
+from multiprocessing import Pool
+from .forms import FileUploadForm, SignUpForm
+
 
 import pandas as pd
-from multiprocessing import Pool
 
-from .forms import FileUploadForm, SignUpForm
+
+
 
 
 class MyRegistrationView(RegistrationView):
@@ -14,8 +17,17 @@ class MyRegistrationView(RegistrationView):
     template_name = 'registration.html'
     success_url = '/dashboard/'
 
+
 class MyLoginView(LoginView):
     template_name = 'login.html'
+
+
+
+def landing_page(request):
+    return render(request, 'index.html')
+
+def dashboard(request): 
+    return render(request, 'index2.html')
 
 # Create your views here.
 def excel_to_qbxml(excel_file):
@@ -27,7 +39,6 @@ def excel_to_qbxml(excel_file):
     #convert csv to qbxml
     
  
-
 
 def upload_file(request):
     if request.method == 'POST':
@@ -45,9 +56,6 @@ def upload_file(request):
     return render(request, 'index1.html', {'form': form})
 
 
-def landing_page(request):
-    return render(request, 'index.html')
 
 
 
-    # return qbxml_file
