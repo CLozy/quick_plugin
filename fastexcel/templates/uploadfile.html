@@ -26,6 +26,13 @@
     
                        {% for form in wizard.form.forms %}
                             {{ form.as_p }}
+                            {% if form.prefix == 'columns' %}  {# Check if this is the ColumnSelectionForm #}
+                                {% for field in form %}
+                                    <!-- <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label> -->
+                                    {{ field }}
+                                    <!-- <br> -->
+                                {% endfor %}
+                            {% endif %}
                                                                      
                         {% endfor %}
                 {% else %}

@@ -13,7 +13,7 @@ from formtools.wizard.views import SessionWizardView
 
 from .models import UploadedFile
 
-from .datahandler import excel_to_csv
+from .datahandler import  extract_excel
 
 
 import pandas as pd
@@ -40,6 +40,23 @@ class MyWizard(SessionWizardView):
     template_name = 'uploadfile.html'
     file_storage = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'files'))
 
+
+    def get_context_data(self, form, **kwargs):
+        context = super().get_context_data(form=form, **kwargs)
+
+        if self.steps.current == 'columns':
+            # Get the uploaded file from the previous step
+            uploaded_file = self.get_cleaned_data_for_step('file')
+            
+            if uploaded_file:
+                # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
+                columns = extract_excel(uploaded_file)  # Replace with your logic
+                
+                # Reinitialize the form with the columns data
+                context['form'] = ColumnSelectionForm(prefix='columns', columns=columns)
+
+        return context
+    
     def done(self, form_list, form_dict,  **kwargs):
         # Get the uploaded file from the first form
         uploaded_file = form_list[0].cleaned_data
