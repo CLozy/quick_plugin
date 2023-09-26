@@ -41,6 +41,28 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+
+/*form fields*/
+.form-check, .form-check-my-class {
+  /* Common styles for .form-check and .form-check-my-class */
+  color: #0ebb2b98;
+  font-size: 14px;
+  /* Add any other common styles you need */
+}
+
+
+
+#checkLabel {
+  position: relative;
+  display: inline;
+  margin-left: 3px; /* Adjust the left margin as needed */
+  margin-right: 15px; /* Adjust the right margin as needed */
+}
+
+#checkLabel:checked + .form-check-my-class {
+  color: #0ebb2b98; /* Change to the color you want */
+}
+
 *,
 *::before,
 *::after {
@@ -293,6 +315,7 @@ input[type="radio"],
 input[type="checkbox"] {
   box-sizing: border-box;
   padding: 0;
+  color:#0ebb2b98
 }
 
 textarea {
@@ -3583,12 +3606,12 @@ input[type="button"].btn-block {
 
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
-  border-color: #4e73df;
-  background-color: #4e73df;
+  border-color: #0ebb2b98;
+  background-color: #0ebb2b98;
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+  box-shadow: 0 0 0 0.2rem #0ebb2b98;
 }
 
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
@@ -3648,8 +3671,8 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
-  border-color: #4e73df;
-  background-color: #4e73df;
+  border-color: #0ebb2b98;
+  background-color: #0ebb2b98;
 }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
@@ -3657,11 +3680,11 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
-  background-color: rgba(78, 115, 223, 0.5);
+  background-color: #0ebb2b98;
 }
 
 .custom-checkbox .custom-control-input:disabled:indeterminate ~ .custom-control-label::before {
-  background-color: rgba(78, 115, 223, 0.5);
+  background-color: #0ebb2b98;
 }
 
 .custom-radio .custom-control-label::before {
@@ -3673,7 +3696,7 @@ input[type="button"].btn-block {
 }
 
 .custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {
-  background-color: rgba(78, 115, 223, 0.5);
+  background-color: #0ebb2b98;
 }
 
 .custom-switch {
@@ -3709,7 +3732,7 @@ input[type="button"].btn-block {
 }
 
 .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {
-  background-color: rgba(78, 115, 223, 0.5);
+  background-color: #0ebb2b98;
 }
 
 .custom-select {

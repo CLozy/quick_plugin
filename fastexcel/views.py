@@ -50,11 +50,11 @@ class MyWizard(SessionWizardView):
             
             if uploaded_file:
                 # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
-                columns = extract_excel(uploaded_file)  # Replace with your logic
-                
+                columns = extract_excel(uploaded_file)  # Replace with your logic  
                 # Reinitialize the form with the columns data
-                context['form'] = ColumnSelectionForm(prefix='columns', columns=columns)
-
+                context['wizard']['form'] = ColumnSelectionForm(prefix='columns', columns=columns)
+                context['wizard']['text'] = "Please select the columns you want to export" 
+                print(context)
         return context
     
     def done(self, form_list, form_dict,  **kwargs):

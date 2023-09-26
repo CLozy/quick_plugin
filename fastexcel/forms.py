@@ -53,4 +53,4 @@ class ColumnSelectionForm(forms.Form):
         super(ColumnSelectionForm, self).__init__(*args, **kwargs)
 
         for column in columns:
-            self.fields[column] = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+            self.fields[column] = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check form-check-my-class' , 'id': 'checkLabel'}))
