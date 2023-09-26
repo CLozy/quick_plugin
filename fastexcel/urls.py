@@ -9,5 +9,5 @@ urlpatterns = [
     path('accounts/login/', views.MyLoginView.as_view() , name='auth_login'),
     path('accounts/', include('registration.backends.default.urls')),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('upload/', views.upload_file, name='upload'),
+    path('upload/', views.MyWizard.as_view(), name='upload'),
 ]

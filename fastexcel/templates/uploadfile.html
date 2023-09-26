@@ -1,6 +1,7 @@
 {% extends "index1.html" %}
 
 {% load static %}
+{% load i18n %}
 
 
 {% block content1 %}
@@ -14,23 +15,34 @@
             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" >Upload File</p>
           
            
-            
-            <form  action="." method="post" enctype="multipart/form-data" class="mx-1 mx-md-4">
-              {% csrf_token %}
-              
-              {% if error_message %}
-              <div class="alert alert-danger" role="alert">
-                {{ error_message }}
-              </div>
-              {% endif %}
-              
-              <div class="form-group">
-                <input type="file" class="form-control-file" id="id_file"  name="file">
-              </div>
+            <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
 
-              <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-5">
-              <input type="submit" class="btn btn-primary btn-lg custom-button"  value="Next" />
-              </div> 
+            <form  action=" " method="post" enctype="multipart/form-data" class="mx-1 mx-md-4">
+              {% csrf_token %}
+            
+                {{ wizard.management_form }}
+                {% if wizard.form.forms %}
+                    {{ wizard.form.management_form }}
+    
+                       {% for form in wizard.form.forms %}
+                            {{ form.as_p }}
+                                                                     
+                        {% endfor %}
+                {% else %}
+                    {{ wizard.form }}
+                 
+                {% endif %}
+              
+                {% if wizard.steps.prev %}
+                    <button class="btn btn-outline-success" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% translate "first step" %}</button>
+                    <button class="btn btn-outline-success"  name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% translate "prev step" %}</button>
+                {% endif %}
+                <!-- <input type="submit" value="{% translate "submit" %}"/>     -->
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-5">
+                    <input type="submit" class="btn btn-primary btn-lg custom-button"  value="{% translate "submit" %}" />
+                </div> 
+
+              
 
             </form>
 

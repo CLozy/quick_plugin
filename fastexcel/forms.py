@@ -4,9 +4,6 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 
-class FileUploadForm(forms.Form):
-    file = forms.FileField(required=True)
-
 
 class LoginForm(AuthenticationForm):
     email = forms.EmailField(
@@ -36,3 +33,24 @@ class SignUpForm(RegistrationForm):
             user.save()
 
         return user
+    
+class FileUploadForm(forms.Form):
+    file = forms.FileField(required=True)
+
+    def clean_file(self):
+        uploaded_file = self.cleaned_data.get('file')
+        if uploaded_file:
+            if not uploaded_file.name.lower().endswith(('.xls', '.xlsx')):
+                raise forms.ValidationError("The uploaded file is not a valid Excel file.")
+        return uploaded_file
+
+
+
+
+class ColumnSelectionForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        columns = kwargs.pop('columns', [])
+        super(ColumnSelectionForm, self).__init__(*args, **kwargs)
+
+        for column in columns:
+            self.fields[column] = forms.BooleanField(required=False, widget=forms.CheckboxInput())

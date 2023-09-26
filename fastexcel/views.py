@@ -1,17 +1,28 @@
 from django.shortcuts import render
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import get_user_model
 from registration.backends.simple.views import RegistrationView
 from multiprocessing import Pool
 
-from .forms import FileUploadForm, SignUpForm, LoginForm
+from .forms import FileUploadForm, SignUpForm, LoginForm, ColumnSelectionForm
+from formtools.wizard.views import SessionWizardView
+
+from .models import UploadedFile
 
 from .datahandler import excel_to_csv
 
+
 import pandas as pd
+import os
 
 # Create your views here.
+
+
+#class based views
 
 class MyRegistrationView(RegistrationView):
     # logging.debug("Class initialised")
@@ -24,7 +35,29 @@ class MyLoginView(LoginView):
     authentication_form = LoginForm
 
 
+class MyWizard(SessionWizardView):
+    form_list = [('file', FileUploadForm), ('columns', ColumnSelectionForm)]
+    template_name = 'uploadfile.html'
+    file_storage = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'files'))
 
+    def done(self, form_list, form_dict,  **kwargs):
+        # Get the uploaded file from the first form
+        uploaded_file = form_list[0].cleaned_data
+        # Save the uploaded file to the database
+        
+        uploaded = UploadedFile(file=uploaded_file)
+        uploaded.save()
+
+        # Get selected columns from the second form
+        selected_columns = form_list[1].cleaned_data
+        # Process the uploaded file and selected columns
+
+        return HttpResponseRedirect(reverse('dashboard'))
+
+
+
+
+#function based views
 def landing_page(request):
     return render(request, 'index.html')
 
@@ -34,31 +67,10 @@ def dashboard(request):
 
 
 
-def upload_file(request):
-    if request.method == 'POST':
-        
-        form = FileUploadForm(request.POST, request.FILES)
-        error_message = None
-        if form.is_valid():
-            # Handle the uploaded file here, e.g., save it to the server
-            uploaded_file = form.cleaned_data['file']
-            try:
-                uploaded_file = form.cleaned_data['file']
-                print(uploaded_file)
-                # Try to read the file as an Excel file
-                excel_to_csv(uploaded_file)  
 
-                # Perform actions with the Excel data
-            except Exception as file_e:
-                # If it's not an Excel file, handle the error
-                error_message = "The uploaded file is not a valid Excel file."      
 
-    else:
-        form = FileUploadForm()  # Create an instance of the form class
 
-    # form.add_error(None, error_message)
 
-    return render(request, 'uploadfile.html', {'form': form, 'error_message': error_message})
 
 
 
