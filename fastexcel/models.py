@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 
+
 # Create your models here.
 
 #Customizing User model
@@ -41,4 +42,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class UploadedFile(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file = models.FileField(upload_to='uploads/')

@@ -13,4 +13,6 @@ def extract_excel(file):
     return extracted_data.columns.tolist()
 
 
-# print(extract_excel("files\P051133258U.xlsx"))
+def get_column_data(file, columns):
+    extracted_data = pd.read_excel(file)
+    return extracted_data[columns].to_dict(orient='records')

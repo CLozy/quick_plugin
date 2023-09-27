@@ -37,6 +37,11 @@ class SignUpForm(RegistrationForm):
 class FileUploadForm(forms.Form):
     file = forms.FileField(required=True)
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(FileUploadForm, self).__init__(*args, **kwargs)
+        self.user = user
+
     def clean_file(self):
         uploaded_file = self.cleaned_data.get('file')
         if uploaded_file:
