@@ -98,8 +98,12 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
 def landing_page(request):
     return render(request, 'index.html')
 
+
 def dashboard(request): 
-    return render(request, 'charts.html')
+    #get the tottal number of uploaded files from the fastexcel_uploadfile db table based on the user of the request
+    user = request.user
+    total_files = UploadedFile.objects.filter(user=user).count()
+    return render(request, 'charts.html' , {'total_files':total_files})
 
 
 
