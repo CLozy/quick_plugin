@@ -9,7 +9,13 @@ load_dotenv()
 client_id = os.getenv('CLIENTID')
 client_secret = os.getenv('CLIENTSECRET')
 
-auth_client = AuthClient(client_id=client_id, client_secret=client_secret, environment='sandbox',
-                         redirect_uri='http://localhost:8000/callback')
-url = auth_client.get_authorization_url([Scopes.Accounting])
-print(url)
+
+def get_auth_url():
+    auth_client = AuthClient(client_id=client_id, client_secret=client_secret, environment='sandbox',
+                            redirect_uri='http://localhost:8000/upload')
+    url = auth_client.get_authorization_url([Scopes.ACCOUNTING])
+
+    return url
+
+
+# print(url)

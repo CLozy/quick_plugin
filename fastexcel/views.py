@@ -108,8 +108,6 @@ def dashboard(request):
 
 
 
-def quckbooks_online():
-    pass
 
 
 
