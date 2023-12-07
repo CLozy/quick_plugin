@@ -10,4 +10,5 @@ urlpatterns = [
     path('accounts/', include('registration.backends.default.urls')),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('upload/', views.MyWizard.as_view(), name='upload'),
+    path('quickbooks/callback/', views.QuickBooksCallbackView.as_view(), name='quickbooks_callback')
 ]

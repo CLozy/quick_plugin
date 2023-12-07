@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views import View
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -21,6 +22,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UploadedFile
 
 from .datahandler import  extract_excel , get_column_data
+
+from .qb import get_auth_url
 
 
 import pandas as pd
@@ -87,11 +90,22 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
 
             # Process the uploaded file and selected columns
             columns_data = get_column_data(uploaded_file_data, selected_columns)
-          
 
-        return HttpResponseRedirect(reverse('dashboard'))
+            #quickbook auth_url
+            qb_auth_url = get_auth_url()
 
+        return HttpResponseRedirect(qb_auth_url)
 
+#Quickbook callback 
+class QuickBooksCallbackView(View):
+    def get(self, request):
+        # Handle the callback from QuickBooks
+        authorization_code = request.GET.get('code')
+        # Perform any necessary actions with the authorization code
+        # ...
+
+        # Redirect back to the next step of the wizard
+        return redirect(reverse('upload'))
 
 
 #function based views
