@@ -15,6 +15,5 @@ class MpesaPay:
 
 
 
-access_token = MpesaPay().authorization() 
-
+access_token = MpesaPay().authorization()
 print(access_token)
