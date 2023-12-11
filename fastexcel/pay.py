@@ -15,20 +15,20 @@ class MpesaPay:
         return access_token
 
     
-    def stk_push(self):
+    def stk_push(self, shortcode=None):
         
         access_token = self.authorization()
         headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + access_token }
        
 
         payload = {
-            "BusinessShortCode": self.shortcode,
+            "BusinessShortCode": shortcode,
             "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMxMjExMTcxNDA0",
             "Timestamp": "20231211171404",
             "TransactionType": "CustomerPayBillOnline",
             "Amount": 1,
             "PartyA": self.phone,
-            "PartyB": self.shortcode,
+            "PartyB": shortcode,
             "PhoneNumber": self.phone,
             "CallBackURL": "https://mydomain.com/path",
             "AccountReference": "CompanyXLTD",
