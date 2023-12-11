@@ -4,9 +4,9 @@ import requests
 
 
 class MpesaPay:
-    def __init__(self, phone=None, amount=None):
+    def __init__(self, phone=None):
         self.phone = phone
-        self.amount = amount
+      
         
 
     def authorization(self):
@@ -37,7 +37,7 @@ class MpesaPay:
         
         response = requests.request("POST", 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', headers = headers, data = payload)
         result = response.text.encode('utf8')
-        return result
+        return result 
 
 
 # access_token = MpesaPay().authorization()
