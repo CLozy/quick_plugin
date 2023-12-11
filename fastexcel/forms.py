@@ -59,3 +59,7 @@ class ColumnSelectionForm(forms.Form):
 
         for column in columns:
             self.fields[column] = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check form-check-my-class' , 'id': 'checkLabel'}))
+
+
+class NumberForm(forms.Form):
+    number_input = forms.IntegerField(label='Enter a Number')

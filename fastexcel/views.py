@@ -25,6 +25,7 @@ from .datahandler import  extract_excel , get_column_data
 
 from .qb import get_auth_url
 
+from .pay import MpesaPay
 
 import pandas as pd
 import os
@@ -93,6 +94,9 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
 
             #quickbook auth_url
             qb_auth_url = get_auth_url()
+
+            #mpesa pay api
+            # payment = MpesaPay().stk_push(shortcode=None)
 
         return HttpResponseRedirect(qb_auth_url)
 
