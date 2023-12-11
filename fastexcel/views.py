@@ -10,20 +10,20 @@ from django.core.files.base import ContentFile
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from registration.backends.simple.views import RegistrationView
 from multiprocessing import Pool
-
-from .forms import FileUploadForm, SignUpForm, LoginForm, ColumnSelectionForm
 from formtools.wizard.views import SessionWizardView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+
+from .forms import FileUploadForm, SignUpForm, LoginForm, ColumnSelectionForm, NumberForm
 from .models import UploadedFile
 
 from .datahandler import  extract_excel , get_column_data
 
-from .qb import get_auth_url
+from .qb import get_auth_url, get_access_token
 
 from .pay import MpesaPay
 
@@ -47,7 +47,7 @@ class MyLoginView(LoginView):
 
 
 class MyWizard(LoginRequiredMixin, SessionWizardView):
-    form_list = [('file', FileUploadForm), ('columns', ColumnSelectionForm)]
+    form_list = [('file', FileUploadForm), ('columns', ColumnSelectionForm), ('number', NumberForm)]
     template_name = 'uploadfile.html'
     # Wizard storage
     file_storage = FileSystemStorage(location='wizard/')
@@ -62,7 +62,7 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
             
             if uploaded_file:
                 # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
-                columns = extract_excel(uploaded_file)  # Replace with your logic  
+                columns = extract_excel(uploaded_file)  
                 # Reinitialize the form with the columns data
                 context['wizard']['form'] = ColumnSelectionForm(prefix='columns', columns=columns)
                 context['wizard']['text'] = "Please select the columns you want to export" 
@@ -106,7 +106,7 @@ class QuickBooksCallbackView(View):
         # Handle the callback from QuickBooks
         authorization_code = request.GET.get('code')
         # Perform any necessary actions with the authorization code
-        # ...
+        get_access_token(authorization_code)
 
         # Redirect back to the next step of the wizard
         return redirect(reverse('upload'))
