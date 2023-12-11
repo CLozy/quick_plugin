@@ -4,10 +4,10 @@ import requests
 
 
 class MpesaPay:
-    def __init__(self, phone=None, amount=None, shortcode=None):
+    def __init__(self, phone=None, amount=None):
         self.phone = phone
         self.amount = amount
-        self.shortcode = shortcode
+        
 
     def authorization(self):
         response = requests.request("GET", 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials', headers = { 'Authorization': 'Basic cFJZcjZ6anEwaThMMXp6d1FETUxwWkIzeVBDa2hNc2M6UmYyMkJmWm9nMHFRR2xWOQ==' })
@@ -32,7 +32,7 @@ class MpesaPay:
             "PhoneNumber": self.phone,
             "CallBackURL": "https://mydomain.com/path",
             "AccountReference": "CompanyXLTD",
-            "TransactionDesc": "Payment of X" 
+            "TransactionDesc": "Payment of fastexcel" 
         }
         
         response = requests.request("POST", 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', headers = headers, data = payload)
