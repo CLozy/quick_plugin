@@ -20,4 +20,3 @@ def get_auth_url():
 
 def get_access_token(auth_code):
     pass
-# print(url)
