@@ -93,7 +93,8 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
             columns_data = get_column_data(uploaded_file_data, selected_columns)
 
             
-            # QuickBooks authentication URL at step 2
+            # check if we are at step 2 of the wizard redirect to auth_url 
+
             if self.steps.current == 'columns':
                 auth_url = get_auth_url()
                 return HttpResponseRedirect(auth_url)
