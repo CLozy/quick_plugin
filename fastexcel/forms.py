@@ -51,7 +51,6 @@ class FileUploadForm(forms.Form):
 
 
 
-
 class ColumnSelectionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         columns = kwargs.pop('columns', [])

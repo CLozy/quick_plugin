@@ -92,24 +92,31 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
             # Process the uploaded file and selected columns
             columns_data = get_column_data(uploaded_file_data, selected_columns)
 
-            #quickbook auth_url
-            qb_auth_url = get_auth_url()
+            
+            # QuickBooks authentication URL at step 2
+            if self.steps.current == 'columns':
+                auth_url = get_auth_url()
+                return HttpResponseRedirect(auth_url)
 
-            #mpesa pay api
+            #mpesa pay api at step 3 after redirect from quickbooks callbacks
             # payment = MpesaPay().stk_push(shortcode=None)
 
-        return HttpResponseRedirect(qb_auth_url)
+        return HttpResponseRedirect('dashboard')
+
+
 
 #Quickbook callback 
 class QuickBooksCallbackView(View):
     def get(self, request):
         # Handle the callback from QuickBooks
         authorization_code = request.GET.get('code')
-        # Perform any necessary actions with the authorization code
-        get_access_token(authorization_code)
+        if authorization_code:
+            # Authorization code is present, proceed with getting access token
+            get_access_token(authorization_code)
+            # Redirect back to the next step 3 of the wizard
+            return redirect(reverse('upload', args=['number'])) 
+            
 
-        # Redirect back to the next step of the wizard
-        return redirect(reverse('upload'))
 
 
 #function based views
