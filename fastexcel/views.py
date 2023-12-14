@@ -69,6 +69,45 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
                 # print(context)
         return context
     
+    def get(self, *args, **kwargs):
+        # Check if the current step is 'columns'
+        if self.steps.current == 'columns':
+            # Get the uploaded file from the previous step
+            uploaded_file = self.get_cleaned_data_for_step('file')
+            
+            if uploaded_file:
+                # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
+                columns = extract_excel(uploaded_file)
+                # Reinitialize the form with the columns data
+                self.storage.set_step_data('columns', {'file': uploaded_file, 'columns': columns})
+                self.storage.current_step = 'columns'
+                # Render the 'columns' step with the updated form data
+                return self.render(self.get_form(step='columns', data=self.storage.get_step_data('columns')))
+        
+        # If not at 'columns' step, proceed with the normal flow
+        return super().get(*args, **kwargs)
+    
+    def post(self, *args, **kwargs):
+        # Check if the current step is 'columns'
+        if self.steps.current == 'columns':
+            # Get the form instance for the current step
+            form = self.get_form(step='columns', data=self.storage.get_step_data('columns'))
+
+            # Check if the form is valid
+            if form.is_valid():
+                print("Form is valid. Redirecting to auth_url.")
+                # Redirect to 'auth_url' after successful form submission
+                auth_url = get_auth_url()
+                return HttpResponseRedirect(auth_url)
+            else:
+                print("Form is not valid:", form.errors.as_text())
+              
+        else:
+            print("Not at 'columns' step")
+
+        # If not at 'columns' step or form is not valid, proceed with the normal flow
+        return super().post(*args, **kwargs)
+    
    
     def done(self, form_list, form_dict,  **kwargs):
         # Get the uploaded file from the first form
