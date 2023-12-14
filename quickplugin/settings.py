@@ -73,7 +73,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quickplugin.wsgi.application'
 
+WIZARD_STORAGE = 'django.contrib.sessions.storage.SessionStorage'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 
 # Database

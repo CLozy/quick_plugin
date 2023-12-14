@@ -30,6 +30,9 @@ from .pay import MpesaPay
 import pandas as pd
 import os
 
+
+
+
 # Create your views here.
 
 
@@ -45,9 +48,14 @@ class MyLoginView(LoginView):
     template_name = 'login.html'
     authentication_form = LoginForm
 
+STEP_1 = 'file'
+STEP_2 = 'columns'
+STEP_3 = 'number'
 
 class MyWizard(LoginRequiredMixin, SessionWizardView):
-    form_list = [('file', FileUploadForm), ('columns', ColumnSelectionForm), ('number', NumberForm)]
+    steps = [STEP_1, STEP_2, STEP_3]
+    
+    form_list = [(STEP_1, FileUploadForm), (STEP_2, ColumnSelectionForm), (STEP_3, NumberForm)]
     template_name = 'uploadfile.html'
     # Wizard storage
     file_storage = FileSystemStorage(location='wizard/')
@@ -56,42 +64,54 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
     def get_context_data(self, form, **kwargs):
         context = super().get_context_data(form=form, **kwargs)
 
-        if self.steps.current == 'columns':
+        if self.steps.current == STEP_2:
             # Get the uploaded file from the previous step
-            uploaded_file = self.get_cleaned_data_for_step('file')
+            uploaded_file = self.get_cleaned_data_for_step(STEP_1)
             
             if uploaded_file:
                 # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
                 columns = extract_excel(uploaded_file)  
                 # Reinitialize the form with the columns data
-                context['wizard']['form'] = ColumnSelectionForm(prefix='columns', columns=columns)
+                context['wizard']['form'] = ColumnSelectionForm(prefix=STEP_2, columns=columns)
                 context['wizard']['text'] = "Please select the columns you want to export" 
                 # print(context)
         return context
     
     def get(self, *args, **kwargs):
         # Check if the current step is 'columns'
-        if self.steps.current == 'columns':
+        if self.steps.current == STEP_2:
             # Get the uploaded file from the previous step
-            uploaded_file = self.get_cleaned_data_for_step('file')
+            uploaded_file = self.get_cleaned_data_for_step(STEP_1)
             
             if uploaded_file:
                 # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
                 columns = extract_excel(uploaded_file)
                 # Reinitialize the form with the columns data
-                self.storage.set_step_data('columns', {'file': uploaded_file, 'columns': columns})
-                self.storage.current_step = 'columns'
+                self.storage.set_step_data(STEP_2, {STEP_1: uploaded_file, STEP_2: columns})
+                self.storage.current_step = STEP_2
                 # Render the 'columns' step with the updated form data
-                return self.render(self.get_form(step='columns', data=self.storage.get_step_data('columns')))
+                return self.render(self.get_form(step=STEP_2, data=self.storage.get_step_data(STEP_2)))
         
         # If not at 'columns' step, proceed with the normal flow
         return super().get(*args, **kwargs)
     
     def post(self, *args, **kwargs):
         # Check if the current step is 'columns'
-        if self.steps.current == 'columns':
+        print("Entering post method.")
+        # Check if the form is being submitted
+        print("Request method:", self.request.method)
+        print("Form data:", self.request.POST)
+        if self.steps.current == STEP_2:
+            import pdb; pdb.set_trace()
+            session_data = self.request.session
+            print("Session data:", session_data)
+
             # Get the form instance for the current step
-            form = self.get_form(step='columns', data=self.storage.get_step_data('columns'))
+            step_data = self.storage.get_step_data(STEP_2)
+            print("Step data:", step_data)
+            form = self.get_form(step=STEP_2, data=step_data)
+
+            print("Form instance:", form)
 
             # Check if the form is valid
             if form.is_valid():
@@ -100,7 +120,10 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
                 auth_url = get_auth_url()
                 return HttpResponseRedirect(auth_url)
             else:
-                print("Form is not valid:", form.errors.as_text())
+                print("Form is not valid:", form.errors)
+                # Render the form with errors
+                return self.render(form)
+                
               
         else:
             print("Not at 'columns' step")
@@ -130,13 +153,7 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
 
             # Process the uploaded file and selected columns
             columns_data = get_column_data(uploaded_file_data, selected_columns)
-
-            
-            # check if we are at step 2 of the wizard redirect to auth_url 
-
-            if self.steps.current == 'columns':
-                auth_url = get_auth_url()
-                return HttpResponseRedirect(auth_url)
+  
 
             #mpesa pay api at step 3 after redirect from quickbooks callbacks
             # payment = MpesaPay().stk_push(shortcode=None)
