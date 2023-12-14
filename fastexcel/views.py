@@ -86,9 +86,7 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
             if uploaded_file:
                 # Extract columns from the uploaded file and pass them to the ColumnSelectionForm
                 columns = extract_excel(uploaded_file)
-                # Reinitialize the form with the columns data
-                self.storage.set_step_data(STEP_2, {STEP_1: uploaded_file, STEP_2: columns})
-                self.storage.current_step = STEP_2
+               
                 # Render the 'columns' step with the updated form data
                 return self.render(self.get_form(step=STEP_2, data=self.storage.get_step_data(STEP_2)))
         
