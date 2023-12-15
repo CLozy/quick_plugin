@@ -153,7 +153,7 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
             columns_data = get_column_data(uploaded_file_data, selected_columns)
   
 
-            #mpesa pay api at step 3 after redirect from quickbooks callbacks
+            #mpesa api at step 3 after redirect from quickbooks callbacks
             # payment = MpesaPay().stk_push(shortcode=None)
 
         return HttpResponseRedirect('dashboard')
