@@ -154,7 +154,7 @@ class MyWizard(LoginRequiredMixin, SessionWizardView):
   
 
             #mpesa api at step 3 after redirect from quickbooks callbacks
-            # payment = MpesaPay().stk_push(shortcode=None)
+            #payment = MpesaPay().stk_push(shortcode=None)
 
         return HttpResponseRedirect('dashboard')
 
